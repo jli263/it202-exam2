@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Exam 2</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+	 crossorigin="anonymous">
+  </head>
+  <body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <div id = "departmentInfo">
+        
+      </div>
+    <ul class="list-group">
+  <li class="list-group-item d-flex justify-content-between align-items-center">
+    Cras justo odio
+    <span class="badge badge-primary badge-pill">14</span>
+  </li>
+</ul>
+    <script>
+      var url = "https://data.cityofchicago.org/resource/xzkq-xp2w.json?$limit=5";
+        
+       $.get(url, function(response){
+           var data = response;
+           console.log(data);
+       
+       $.each(data,function(i,j){
+           var found = [];
+           
+           if ($.inArray(j.department, found) == -1) {
+               var clone = $(".list-group").clone();
+               clone.find(".list-group-item").text(j.department);
+              
+               var urldepartment = url + "&department=" + j.department;
+               $.get(urldepartment,function(response) {
+                     clone.find(".badge").text(response.length);
+                     });
+              
+               $("#departmentInfo").append(clone);
+               found.push(j.department);
+           }
+      
+          
+       });
+       });
+      
+      </script>
+   
+
+  </body>
+</html>
